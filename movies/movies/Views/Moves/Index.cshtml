@@ -2,4 +2,23 @@
 @{
     ViewData["title"] = "movies";
 }
-<h2>Movies</h2>
+<h2>
+    <i class="bi bi-film"></i>
+    Movies</h2>
+<hr />
+
+<button class="btn btn-primary">Add Move</button>
+
+@if (!Model.Any())
+{
+    <div class="mt-4 alert alert-danger" role="alert">
+        This is a danger alert—check it out!
+    </div>
+}else{
+    <ul class="m-4">
+        @foreach (var movie in Model)
+        {
+            <li>@movie.Title</li>
+        }
+    </ul>
+}
