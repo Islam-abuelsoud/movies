@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using movies.ViewModels;
 
 namespace Moves_List.Controllers
 {
@@ -15,10 +16,19 @@ namespace Moves_List.Controllers
             _context = context;
         }
         public async Task<IActionResult> Index()
-        { 
+        {
             var Movies = await _context.Moves.ToListAsync();
             return View(Movies);
-        } 
+        }
+        public async Task<IActionResult> Create()
+        {
+            var model = new Movies_VM
+            {
+                Genres = await _context.Genres.ToListAsync()
+            };
+
+            return View(model);
+        }
 
     }
 }

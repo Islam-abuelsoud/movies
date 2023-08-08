@@ -149,3 +149,4 @@ D:\my-app\projects\movies\movies\movies\obj\Debug\net5.0\movies.genruntimeconfig
 D:\my-app\projects\movies\movies\movies\obj\Debug\net5.0\ref\movies.dll
 D:\my-app\projects\movies\movies\movies\bin\Debug\net5.0\libman.json
 D:\movies\movies\movies\bin\Debug\net5.0\libman.json
+D:\movies\movies\movies\obj\Debug\net5.0\Razor\Views\Moves\create.cshtml.g.cs
