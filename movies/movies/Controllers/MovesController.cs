@@ -24,7 +24,7 @@ namespace Moves_List.Controllers
         {
             var model = new Movies_VM
             {
-                Genres = await _context.Genres.ToListAsync()
+                Genres = await _context.Genres.OrderBy(a=>a.Name).ToListAsync()
             };
 
             return View(model);

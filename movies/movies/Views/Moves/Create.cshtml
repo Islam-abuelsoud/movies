@@ -1,4 +1,5 @@
-﻿@model Movies_VM
+﻿
+@model Movies_VM
 
 @{
     ViewData["Title"] = "Add Move"; 
@@ -6,8 +7,45 @@
 <h2>
     Create Move
 </h2>
-<form method = "POST">
-    <div>
-
+<section class="row">
+    <div class="col-md-4">
+        <form method = "POST">
+            <div class="form-group" >
+                <lable class="text-muted" asp-for = "Title">Title</lable>
+                <input type= "text" class = "form-control" asp-for = "Title" maxlength="250"  />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <lable class="text-muted" asp-for="GenreId">Genre</lable>
+                <select class="form-control" asp-for="GenreId" asp-items="@(new SelectList(Model.Genres,"Id","Name"))" > 
+                    <option></option>
+                </select>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+              <div class="form-group w-50">
+                <lable class="text-muted" asp-for = "Year">Year</lable>
+                <input type= "number" class = "form-control" asp-for = "Year" value = "" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group ">
+                <lable class="text-muted" asp-for = "Rate">Rate</lable>
+                <input type= "number" class = "form-control" asp-for = "Rate" value = "" />
+                <span asp-validation-for="Rate" class="text-danger"></span>
+            </div>
+           <div class="form-group" >
+                <lable class="text-muted" asp-for = "StoryLine">StoryLine</lable>
+                <textarea type= "text" class = "form-control" asp-for = "StoryLine" maxlength="2500" > </textarea>
+                <span asp-validation-for="StoryLine" class="text-danger"></span>
+            </div>
+            <div class="custm-file" >
+                <input type= "file" class = "custm-file-input" asp-for = "Poster" accept="image/*"  /> 
+                <lable class="text-muted" asp-for = "Poster">Poster</lable>
+                <span asp-validation-for="Poster" class="text-danger"></span>
+            </div>
+          <div class="mt-4">
+            <a type="submit" class="  btn btn-primary"  asp-action="Create">Save</a>
+            <a class="btn btn-danger"  asp-action="Index">Cancel</a>
+          </div>
+        </form>
     </div>
-</form>
+</section>
