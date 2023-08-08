@@ -15,9 +15,10 @@ namespace Moves_List.Controllers
             _context = context;
         }
         public async Task<IActionResult> Index()
-        {
+        { 
             var Movies = await _context.Moves.ToListAsync();
             return View(Movies);
-        }
+        } 
+
     }
 }
