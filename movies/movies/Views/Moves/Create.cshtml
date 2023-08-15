@@ -38,7 +38,7 @@
                 <span asp-validation-for="StoryLine" class="text-danger"></span>
             </div>
             <div class="custm-file" >
-                <input type= "file" class = "custm-file-input" asp-for = "Poster" accept="image/*"  /> 
+                <input type= "file" id="Poster" class = "custm-file-input" asp-for = "Poster" accept="image/*"  /> 
                 <lable class="text-muted" asp-for = "Poster">Poster</lable>
                 <span asp-validation-for="Poster" class="text-danger"></span>
             </div>
@@ -54,3 +54,16 @@
         </div>
     </div>
 </section>
+@section scripts{
+    <script>
+        $(document).ready(()=>{
+            $("#Poster").on("change",()=>{
+                let selected = $(this)val().split("\\").pop();
+                $(this).siblings('lable').text(selected);
+                let image = window.URL.CreateObjectURL(this.files[0]);
+                $(".Poster-Contaner").removeclass('d-none');
+                $(".Poster-Contaner").find('img').attr('src',image)
+            });
+        });
+    </script>
+}
