@@ -49,21 +49,25 @@
         </form>
     </div>
     <div class="col-md-4">
-        <div class="Poster-Contaner">
-        <img class="img-thumbnail" src ="" alt="poster" />
+        <div id ="Poster-Contaner"  onchange="readURL(this);"   class="Poster-Contaner d-none">
+        <img class="img-thumbnail" src ="" alt="poster" id="blah"/>
         </div>
     </div>
 </section>
 @section scripts{
     <script>
-        $(document).ready(()=>{
-            $("#Poster").on("change",()=>{
-                let selected = $(this)val().split("\\").pop();
-                $(this).siblings('lable').text(selected);
-                let image = window.URL.CreateObjectURL(this.files[0]);
-                $(".Poster-Contaner").removeclass('d-none');
-                $(".Poster-Contaner").find('img').attr('src',image)
-            });
-        });
+             function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+       
     </script>
 }
