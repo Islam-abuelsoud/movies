@@ -7,7 +7,7 @@
 <h2>
     Create Move
 </h2>
-<section class="row">
+<section class="row justify-content-between">
     <div class="col-md-4">
         <form method = "POST">
             <div class="form-group" >
@@ -24,7 +24,7 @@
             </div>
               <div class="form-group w-50">
                 <lable class="text-muted" asp-for = "Year">Year</lable>
-                <input type= "number" class = "form-control" asp-for = "Year" value = "" />
+                <input type= "number" id="year" class = "form-control" asp-for = "Year" value = "" />
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-group ">
@@ -38,36 +38,24 @@
                 <span asp-validation-for="StoryLine" class="text-danger"></span>
             </div>
             <div class="custm-file" >
-                <input type= "file" id="Poster" class = "custm-file-input" asp-for = "Poster" accept="image/*"  /> 
+                <input type= "file"  id="Poster" class = "custm-file-input" asp-for = "Poster" accept="image/*"  onchange="loadFile(event)"  /> 
                 <lable class="text-muted" asp-for = "Poster">Poster</lable>
                 <span asp-validation-for="Poster" class="text-danger"></span>
             </div>
           <div class="mt-4">
-            <a type="submit" class="  btn btn-primary"  asp-action="Create">Save</a>
+            <button type="submit" class="  btn btn-primary"  asp-action="Create">Save</button>
             <a class="btn btn-danger"  asp-action="Index">Cancel</a>
           </div>
         </form>
     </div>
     <div class="col-md-4">
-        <div id ="Poster-Contaner"  onchange="readURL(this);"   class="Poster-Contaner d-none">
-        <img class="img-thumbnail" src ="" alt="poster" id="blah"/>
+        <div id ="Poster-Contaner" class="Poster-Contaner d-none">
+        <img class="img-thumbnail" src ="" alt="poster" id="output"/>
         </div>
-    </div>
+    </div>  
+ 
 </section>
 @section scripts{
-    <script>
-             function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#blah')
-                        .attr('src', e.target.result);
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-       
-    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="/js/movies.js"></script>
 }
