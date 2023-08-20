@@ -9,7 +9,7 @@
 </h2>
 <section class="row justify-content-between">
     <div class="col-md-4">
-        <form method = "POST">
+        <form method = "POST" asp-action="Create" enctype ="multipart/form-data" >
             <div class="form-group" >
                 <lable class="text-muted" asp-for = "Title">Title</lable>
                 <input type= "text" class = "form-control" asp-for = "Title" maxlength="250"  />
@@ -24,12 +24,12 @@
             </div>
               <div class="form-group w-50">
                 <lable class="text-muted" asp-for = "Year">Year</lable>
-                <input type= "number" id="year" class = "form-control" asp-for = "Year" value = "" />
+                <input type= "number" id="year" class = "form-control" asp-for = "Year" value = "@(Model.Year > 0 ? Model.Year : "")" />
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-group ">
                 <lable class="text-muted" asp-for = "Rate">Rate</lable>
-                <input type= "number" class = "form-control" asp-for = "Rate" value = "" />
+                <input type= "number" class = "form-control" asp-for = "Rate" value = "@(Model.Rate > 0 ? Model.Rate : "")" />
                 <span asp-validation-for="Rate" class="text-danger"></span>
             </div>
            <div class="form-group" >
