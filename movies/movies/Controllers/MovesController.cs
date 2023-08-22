@@ -13,7 +13,8 @@ namespace Moves_List.Controllers
     public class MovesController : Controller
     {
         private readonly AppDbContext _context;
-
+        private new List<string> _allowedExtenstions = new List<string> { ".jpg", ".png" };
+        private long _maxAllowedPosterSize = 1048576;
         public MovesController(AppDbContext context)
         {
             _context = context;
@@ -38,47 +39,55 @@ namespace Moves_List.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Genres = await _context.Genres.OrderBy(a => a.Name).ToListAsync();
-                return View(model);
+                model.Genres = await _context.Genres.OrderBy(m => m.Name).ToListAsync();
+                return View("MovieForm", model);
             }
+
             var files = Request.Form.Files;
+
             if (!files.Any())
             {
-                model.Genres = await _context.Genres.OrderBy(a => a.Name).ToListAsync();
-                ModelState.AddModelError("Poster", "Pleas Select Poster..!");
-                return View(model);
+                model.Genres = await _context.Genres.OrderBy(m => m.Name).ToListAsync();
+                ModelState.AddModelError("Poster", "Please select movie poster!");
+                return View("MovieForm", model);
             }
+
             var poster = files.FirstOrDefault();
-            var EX = new List<string> { ".jpg", ".png" };
-            if (!EX.Contains(Path.GetExtension(poster.FileName).ToLower()))
+
+
+            if (!_allowedExtenstions.Contains(Path.GetExtension(poster.FileName).ToLower()))
             {
-                model.Genres = await _context.Genres.OrderBy(a => a.Name).ToListAsync();
-                ModelState.AddModelError("Poster", "jpg or png only ..!");
-                return View(model);
+                model.Genres = await _context.Genres.OrderBy(m => m.Name).ToListAsync();
+                ModelState.AddModelError("Poster", "Only .PNG, .JPG images are allowed!");
+                return View("MovieForm", model);
             }
-            if (poster.Length < 1048576)
+
+            if (poster.Length > _maxAllowedPosterSize)
             {
-                model.Genres = await _context.Genres.OrderBy(a => a.Name).ToListAsync();
-                ModelState.AddModelError("Poster", "1MB only ..!");
-                return View(model);
+                model.Genres = await _context.Genres.OrderBy(m => m.Name).ToListAsync();
+                ModelState.AddModelError("Poster", "Poster cannot be more than 1 MB!");
+                return View("MovieForm", model);
             }
-            using var stream = new MemoryStream();
-            await poster.CopyToAsync(stream);
-            var move = new Move
+
+            using var dataStream = new MemoryStream();
+
+            await poster.CopyToAsync(dataStream);
+
+            var movies = new Move
             {
                 Title = model.Title,
                 GenreId = model.GenreId,
-                Rate = model.Rate,
                 Year = model.Year,
+                Rate = model.Rate,
                 StoryLine = model.StoryLine,
-                Poster = stream.ToArray()
+                Poster = dataStream.ToArray()
             };
-            _context.Add(move);
+
+            _context.Moves.Add(movies);
             _context.SaveChanges();
 
+          //  _toastNotification.AddSuccessToastMessage("Movie created successfully");
             return RedirectToAction(nameof(Index));
-
-
         }
 
     }
