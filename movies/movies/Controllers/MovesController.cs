@@ -82,11 +82,12 @@ namespace Moves_List.Controllers
                 StoryLine = model.StoryLine,
                 Poster = dataStream.ToArray()
             };
+            model.Genres = await _context.Genres.OrderBy(m => m.Name).ToListAsync();
 
             _context.Moves.Add(movies);
             _context.SaveChanges();
 
-          //  _toastNotification.AddSuccessToastMessage("Movie created successfully");
+            //  _toastNotification.AddSuccessToastMessage("Movie created successfully");
             return RedirectToAction(nameof(Index));
         }
 
