@@ -5,11 +5,12 @@
     ViewData["Title"] = "Add Move"; 
 }
 <h2>
-    Create Move
+    @(Model.Id > 0 ? "Edit" : "Create") Move
 </h2>
 <section class="row justify-content-between">
     <div class="col-md-4">
-        <form method = "POST" asp-action="Create" enctype="multipart/form-data" >
+        <form method = "POST" asp-action="@(Model.Id > 0 ? "Edit" : "Create")" enctype="multipart/form-data" >
+            <inbut type="hidden" asp-for="id" />
             <div class="form-group" >
                 <lable class="text-muted" asp-for = "Title">Title</lable>
                 <input type= "text" class = "form-control" asp-for = "Title" maxlength="250"  />
@@ -43,19 +44,21 @@
                 <span asp-validation-for="Poster" class="text-danger"></span>
             </div>
           <div class="mt-4">
-            <button type="submit" class="  btn btn-primary"  asp-action="Create">Save</button>
+            <button type="submit" class="  btn btn-primary"  asp-action=@(Model.Id > 0 ? "Edit" : "Create")>@(Model.Id > 0 ? "Edit" : "Create")</button>
             <a class="btn btn-danger"  asp-action="Index">Cancel</a>
           </div>
         </form>
     </div>
     <div class="col-md-4">
-        <div id ="Poster-Contaner" class="Poster-Contaner d-none">
-        <img class="img-thumbnail" src ="" alt="poster" id="output"/>
+        <div id ="Poster-Contaner" class="Poster-Contaner @(Model.Id > 0 ? "" : "d-none")"">
+        <img src="@(Model.Id > 0 ? $"data:image/*;base64,{Convert.ToBase64String(Model.Poster)}" : string.Empty)" alt="Poster" class="img-thumbnail" />
         </div>
     </div>  
- 
+
 </section>
 @section scripts{
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+ }
     <script src="/js/movies.js"></script>
 }

@@ -7,6 +7,7 @@ namespace movies.ViewModels
 {
     public class Movies_VM
     {
+        public int Id { get; set; }
         [Required, StringLength(250)]
         public string Title { get; set; }
         public int Year { get; set; }
